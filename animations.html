@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta charset="UTF-8">
+	<title>animation</title>
+	<link rel="stylesheet" href="css/proto_drawers.css">
+
+	<script src="lib/js/jquery-2.2.3.min.js"></script>
+	<script src="js/proto_drawers.js"></script>
+<style>
+.container {
+	position:relative;
+	overflow:hidden;
+	width:300px;
+	height:300px;
+	border:1px solid black;
+}
+.proto-drawer {
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	background-color:blue;
+}
+
+
+button {
+	display:inline-block;
+	padding:1em 0;
+	width:7em;
+	border-width:0;
+	background-color:#ddd;
+	border-radius:4px;
+	outline:0;
+	margin-top:.5em;
+}
+button:hover {
+	cursor:pointer;
+	background-color:#eee;
+}
+
+</style>
+</head>
+<body>
+	<header>
+		<hgroup>
+			<h1>HamProto Drawers</h1>
+			<p>A set of attributes that gives sliding control with three simple options</p>
+		</hgroup>
+	</header>
+	<div class="container proto-slide-in-origin">
+		<div class="proto-drawer proto-slide-in-origin"></div>
+	</div>
+	<button data-proto-drawer=".proto-drawer toggle left">Left</button>
+	<button data-proto-drawer=".proto-drawer toggle right">Right</button>
+	<br>
+	<button data-proto-drawer=".proto-drawer toggle up">Up</button>
+	<button data-proto-drawer=".proto-drawer toggle down">Down</button>
+	<br>
+	<button data-proto-drawer=".proto-drawer toggle">Toggle</button>
+	<button data-proto-drawer=".proto-drawer out">Out</button>
+	<button data-proto-drawer=".proto-drawer in">In</button>
+	<br>
+	<button data-proto-drawer-hover=".proto-drawer toggle up">hover me</button>
+	<button data-proto-drawer=".proto-drawer toggle left,.container toggle right">Dumb</button>
+	<button data-proto-drawer="button toggle down">Stupid</button>
+
+	<hr>
+
+	<div>
+		<h2>Guide</h2>
+		<p>Requirements: Jquery</p>
+		<p>Their are three hooks to use with the proto drawer library. Selector, Toggle, and Direction. Using these three options you can create powerful drawers.</p>
+		<hr>
+		<h3>Selector</h3>
+		<p>Use simple css selectors to select any element on the page.</p>
+		<h3>Toggle</h3>
+		<p>Toggle, In, or Out will allow you to make hooks that only open or close, or toggle back and forth.</p>
+		<h3>Direction</h3>
+		<p>Four directions are available: Up, Right, Down, Left. Use these explicitely on activator objects, or leave them off to allow the drawer to slide in whatever direction it currently is moving. The default if never specified will be to the right.</p>
+		<hr>
+		<h2>Events</h2>
+		<p>A couple events have been provided for more versatility. The default event is a click, but you can also specify a mouseleave, mouseenter, or hover event in the attribute name itself.</p>
+	</div>
+
+
+
+</body>
+</html>

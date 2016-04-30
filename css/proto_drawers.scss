@@ -1,0 +1,74 @@
+$inorout: (
+	'in',
+	'out'
+	);
+$directions: (
+	up:-100%,
+	right:100%,
+	down:100%,
+	left:-100%,
+	origin:0
+	);
+// $cardinal values will be used for the correct translate function
+$cardinal: (
+	up:'Y',
+	right:'X',
+	down:'Y',
+	left:'X'
+	);
+$timing: 0.4s;
+
+// http://www.justinnavarro.net/blog2/2015/02/08/sass-explode-function/
+@function explode($string,$dem) {$list: (); $sum: str-length($string); @for $i from 1 through $sum {$str: str-index($string,$dem); @if str-length($string) >= 1 and $str == null {$list: append($list,$string); $string: ''; } @if type-of($str) == number {$each: str-slice($string,0,($str - 1)); $list: append($list,$each); $string: str-slice($string,($str + 1), $sum); } } @return $list; }
+
+
+@mixin makeTransform($direction,$value){
+	@if($direction=='') {
+		$s : explode($value,",");
+		-webkit-transform: translateX(#{nth($s,1)}) translateY(#{nth($s,2)});
+		transform: translateX(#{nth($s,1)}) translateY(#{nth($s,2)});
+	} @else {
+		-webkit-transform: translate#{$direction}#{"(#{$value})"};
+		transform: translate#{$direction}#{"(#{$value})"};
+	}
+}
+
+// $dk is direction key, $dv is direction value
+@each $dk,$dv in $directions {
+	.proto-set-#{$dk} {
+		@if(map-get($cardinal,$dk)=='Y') {
+			@include makeTransform('',"0,#{$dv}");
+		} @else if($dk=='origin') {
+			@include makeTransform('',"0,0");
+		} @else {
+			@include makeTransform('',"#{$dv},0");
+		}
+	}
+	@if($dk!='origin') {
+		// $ik is inorout key
+		@each $ik in $inorout {
+			.proto-slide-#{$ik}-#{$dk} {
+				-webkit-animation:proto-slide-#{$ik}-#{$dk} $timing 1 both;
+				animation:proto-slide-#{$ik}-#{$dk} $timing 1 both;
+			}
+			@keyframes proto-slide-#{$ik}-#{$dk} {
+				@if ($ik=='in') {
+					from { 
+						@include makeTransform(map-get($cardinal,$dk),$dv);
+					}
+					to { 
+						@include makeTransform(map-get($cardinal,$dk),0);
+					}
+				} @else {
+					from { 
+						@include makeTransform(map-get($cardinal,$dk),0);
+					}
+					to { 
+						@include makeTransform(map-get($cardinal,$dk),$dv);
+					}
+				}
+			}
+		}
+	}
+}
+
